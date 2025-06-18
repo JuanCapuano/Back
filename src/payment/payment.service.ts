@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { Payment, PaymentStatus } from './entities/payment.entity';
+import { Pagination , IPaginationOptions, paginate } from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class PaymentService {
@@ -28,8 +29,8 @@ export class PaymentService {
     return await this.paymentRepository.save(payment);
   }
 
-  async findAll(): Promise<Payment[]> {
-    return await this.paymentRepository.find();
+  async findAll(options: IPaginationOptions): Promise<Pagination<Payment>> {
+    return paginate<Payment>(this.paymentRepository, options)
   }
 
   async findOne(id: number): Promise<Payment | null> {

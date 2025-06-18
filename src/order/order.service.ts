@@ -4,6 +4,7 @@ import { Or, Repository } from 'typeorm';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Order, OrderStatus } from './entities/order.entity';
+import { IPaginationOptions, paginate, Pagination } from 'nestjs-typeorm-paginate';
 
 
 @Injectable()
@@ -25,9 +26,9 @@ export class OrderService {
   return await this.orderRepository.save(order);
 }
 
-  async findAll(): Promise<Order[]> {
-    return await this.orderRepository.find();
-  }
+  async findAll(options: IPaginationOptions): Promise<Pagination<Order>> {
+  return paginate<Order>(this.orderRepository, options);
+}
 
   async findOne(id: number): Promise<Order | null> {
     return await this.orderRepository.findOne({ where: { id } });
