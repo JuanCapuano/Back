@@ -21,13 +21,13 @@ import { PaymentService } from './payment/payment.service';
         password: 'mipassword',
         synchronize: true,
         entities,
-        port:5433
+        port:5437
       }),
       TypeOrmModule.forFeature(entities),
       OrderModule,
       PaymentModule],
-  controllers: [AppController, OrderController, PaymentController],
-  providers: [AppService, OrderService, PaymentService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
 
